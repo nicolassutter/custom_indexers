@@ -1,13 +1,14 @@
 ---
+# https://github.com/Jackett/Jackett/wiki/Definition-format
 id: rarbg_custom
 name: Custom Rarbg
-description: "not here _ not scene"
+description: Rarbg indexer from SQLite database
 language: en-US
-type: private
+type: public
 encoding: UTF-8
-requestDelay: 4.1 # #13796
+requestDelay: 4.1
 links:
-  - https://192.168.1.7579/
+  - http://192.168.1.132:3000/
 
 caps:
   categorymappings:
@@ -31,8 +32,6 @@ search:
   inputs:
     # Specify whichever query parameters the API is prepared to accept as valid. Some examples below.
     query_term: "{{ if .Query.IMDBID }}{{ .Query.IMDBID }}{{ else }}{{ re_replace .Keywords \"[']\" \"\" }}{{ end }}"
-    limit: 50
-    sort: date_added
 
   rows:
     selector: data
@@ -47,8 +46,6 @@ search:
       text: "{{ if .Result.title_test }}{{ .Result.title_test }}{{ else }}Rarbg did not provide a title{{ end }}"
     _id:
       selector: id
-    _filename:
-      selector: filename
     details:
       # No details page
       text: "#"
