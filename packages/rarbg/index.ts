@@ -89,14 +89,20 @@ fastify.get<{
     }
   }
 
+  function getCategoryMapKey(item: Item) {
+    return Object
+      .keys(categoryMap)
+      .find(catName => item.cat && item.cat.startsWith(catName)) as (keyof typeof categoryMap) | undefined
+  }
+
   reply.send({
     data: items
     // exclude items of unknown categories
     // see rarbg_custom.yml for supported categories
-    .filter(item => item.cat in categoryMap)
+    .filter(item => getCategoryMapKey(item))
     .map(item => ({
       id: item.id,
-      cat: categoryMap[item.cat as keyof typeof categoryMap].id,
+      cat: categoryMap[ getCategoryMapKey(item)!  ].id,
       title: item.title,
       hash: item.hash,
       imdbId: item.imdb,
