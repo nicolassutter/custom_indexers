@@ -3,9 +3,13 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "start": "pnpm run -r start"
+    "start": "pnpm run -r start",
+    "release": "bumpp"
   },
   "keywords": [],
   "author": "Sutter Nicolas",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "bumpp": "^9.1.0"
+  }
 }
