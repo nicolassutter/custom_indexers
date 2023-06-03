@@ -24,6 +24,6 @@ If you would like to access it, you could try to DM me.
 
     > You might want to use a volume for the database file when running your Jackett container. `docker run ... -v /path/to/file/on/host/system/rarbg_custom.yml:/app/Jackett/Definitions/rarbg_custom.yml`
 
-    **Note**: Do not forget to change the `links` inside `rarbg_custom.yml` to match the url of your API's container, otherwiser Jackett won't be able to communicate with the custom Rarbg API we set up earlier.
+    **Note**: Do not forget to change the `links` inside `rarbg_custom.yml` to match the url of your API's container, otherwise Jackett won't be able to communicate with the custom Rarbg API we set up earlier.
 
 3. That's pretty much it, you just need to configure your indexer with Jackett's UI.
