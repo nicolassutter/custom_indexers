@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
+    "start": "pnpm run -r start"
   },
   "keywords": [],
   "author": "Sutter Nicolas",
