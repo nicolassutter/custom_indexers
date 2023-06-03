@@ -1,0 +1,19 @@
+{
+  "name": "rarbg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "Sutter Nicolas",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.16.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "@prisma/client": "4.15.0",
+    "prisma": "^4.15.0"
+  }
+}

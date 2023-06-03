@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Item {
+  id     Int     @id @default(autoincrement())
+  hash   String @unique
+  title  String
+  dt     String
+  cat    String
+  size   BigInt?
+  ext_id String?
+  imdb   String?
+
+  @@index([ext_id], map: "ix__ext_id")
+  @@index([imdb], map: "ix__imdb")
+  @@index([cat], map: "ix__cat")
+}

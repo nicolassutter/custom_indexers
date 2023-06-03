@@ -1,0 +1,67 @@
+---
+id: rarbg_custom
+name: Custom Rarbg
+description: "not here _ not scene"
+language: en-US
+type: private
+encoding: UTF-8
+requestDelay: 4.1 # #13796
+links:
+  - https://192.168.1.7579/
+
+caps:
+  categorymappings:
+    - {id: 0, cat: Movies, desc: "Movies", default: false}
+    - {id: 1, cat: TV, desc: "TV"}
+    - {id: 2, cat: PC/Games, desc: "Games PC"}
+    - {id: 3, cat: Books, desc: "Books"}
+
+  modes:
+    search: [q]
+
+search:
+  paths:
+    # "newfilter/2" include 0day and music
+    # https://www.torrentleech.org/torrents/browse/list/categories/29,2,26,27,32,44,7,34,35/facets/tags:FREELEECH,nonscene/exact/1/query/friends/orderby/added/order/desc
+    - path: "api/torrents"
+      method: get
+      response:
+        type: json
+  
+  inputs:
+    # Specify whichever query parameters the API is prepared to accept as valid. Some examples below.
+    query_term: "{{ if .Query.IMDBID }}{{ .Query.IMDBID }}{{ else }}{{ re_replace .Keywords \"[']\" \"\" }}{{ end }}"
+    limit: 50
+    sort: date_added
+
+  rows:
+    selector: data
+
+  fields:
+    category:
+      selector: cat
+    title_test:
+      selector: title
+      optional: true
+    title:
+      text: "{{ if .Result.title_test }}{{ .Result.title_test }}{{ else }}Rarbg did not provide a title{{ end }}"
+    _id:
+      selector: id
+    _filename:
+      selector: filename
+    details:
+      # No details page
+      text: "#"
+    infohash:
+      selector: hash
+    imdbid:
+      selector: imdbId
+    date:
+      # 2021-10-25 02:18:31
+      selector: addedOn
+      # auto adjusted by site account profile
+      filters:
+        - name: dateparse
+          args: "yyyy-MM-dd HH:mm:ss"
+    size:
+      selector: size
