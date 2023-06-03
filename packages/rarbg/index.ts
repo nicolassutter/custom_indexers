@@ -22,6 +22,26 @@ fastify.get<{
     ? 100
     : undefined
 
+  const movie_and_tv: (Item | null)[] = !request.query.query_term
+    ? await Promise.all([
+        prisma.item.findFirst({
+          where: {
+            cat: {
+              equals: 'movies'
+            }
+          }
+        }),
+
+        prisma.item.findFirst({
+          where: {
+            cat: {
+              equals: 'tv'
+            }
+          }
+        })
+      ])
+    : []
+
   const res = await Promise.all([
     // try original query_term
     prisma.item.findMany({
@@ -42,7 +62,11 @@ fastify.get<{
         }
       },
       take: limit ?? 99999999999999
-    })
+    }),
+
+    // When no query_term is provided we at least send a Movie and a TV result
+    // for Sonarr and Radarr tests
+    ...movie_and_tv as [Item, Item]
   ])
 
   // merge all results
