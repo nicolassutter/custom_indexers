@@ -18,26 +18,30 @@ fastify.get<{
     limit?: string
   }
 }>('/api/torrents', async (request, reply) => {
+  const limit = !request.query.query_term
+    ? 100
+    : undefined
+
   const res = await Promise.all([
     // try original query_term
     prisma.item.findMany({
       where: {
         title: {
           // TODO: fuzzy search ?
-          contains: request.query.query_term,
+          contains: request.query.query_term ?? '',
         }
       },
-      // TODO: set a limit ?
-      // take: 1000
+      take: limit ?? 99999999999999
     }),
 
     // try query_term by replacing spaces with dots
     prisma.item.findMany({
       where: {
         title: {
-          contains: request.query.query_term?.replace(/\s/g, '.'),
+          contains: request.query.query_term?.replace(/\s/g, '.') ?? '',
         }
-      }
+      },
+      take: limit ?? 99999999999999
     })
   ])
 
