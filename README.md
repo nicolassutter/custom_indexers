@@ -16,7 +16,7 @@ If you would like to access it, you could try to DM me.
 
 1. Run the Docker image and set the following env variables:
 
-    - `DATABASE_URL=/path/to/file/in/container/db.sqlite`
+    - `DATABASE_URL=file:/path/to/file/in/container/db.sqlite`
 
     > You might want to use a volume for the database file. `docker run ... -v /path/to/file/on/host/system/db.sqlite:/path/to/file/in/container/db.sqlite`
 
